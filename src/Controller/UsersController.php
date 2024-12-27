@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Authentication\Authenticator\ResultInterface;
+use Authentication\Controller\Component\AuthenticationComponent;
+
 /**
  * Users Controller
  *
@@ -10,6 +13,20 @@ namespace App\Controller;
  */
 class UsersController extends AppController
 {
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated(['login', 'add']);
+    }
+
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('Authentication.Authentication');
+
+    }
+
     /**
      * Index method
      *
@@ -96,5 +113,29 @@ class UsersController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function login()
+    {
+        $this->request->allowMethod(['get', 'post']);
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $target = $this->Authentication->getLoginRedirect() ?? '/';
+            return $this->redirect($target);
+        }
+
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error(__('Invalid username or password'));
+        }
+    }
+
+    public function logout()
+    {
+        $result = $this->Authentication->getResult();
+        if ($result->isValid()) {
+            $this->Authentication->logout();
+            //return $this->redirect('/');
+            return $this->redirect(['controller' => 'Users', 'action' => 'login']);
+        }
     }
 }
