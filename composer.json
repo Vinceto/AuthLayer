@@ -4,9 +4,12 @@
     "license": "MIT",
     "type": "project",
     "homepage": "https://cakephp.org",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": ">=8.1",
         "cakephp/authentication": "^3.2",
+        "cakephp/authorization": "^2.0",
         "cakephp/cakephp": "5.1.*",
         "cakephp/migrations": "^4.0.0",
         "cakephp/plugin-installer": "^2.0",
