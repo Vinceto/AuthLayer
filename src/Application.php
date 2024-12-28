@@ -36,6 +36,12 @@ use Authentication\Identifier\AbstractIdentifier;
 use Authentication\Identifier\IdentifierInterface;
 use Authentication\Middlewar;
 use Cake\Routing\Router;
+use Authorization\AuthorizationService;
+use Authorization\AuthorizationServiceInterface;
+use Authorization\AuthorizationServiceProviderInterface;
+use Authorization\Middleware\AuthorizationMiddleware;
+use Authorization\Policy\OrmResolver;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Application setup class.
@@ -45,7 +51,7 @@ use Cake\Routing\Router;
  *
  * @extends \Cake\Http\BaseApplication<\App\Application>
  */
-class Application extends BaseApplication implements AuthenticationServiceProviderInterface
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface, AuthorizationServiceProviderInterface
 {
     /**
      * Returns a service provider instance.
@@ -89,6 +95,15 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         return $service;
     }
+
+    public function getAuthorizationService(ServerRequestInterface $request): AuthorizationServiceInterface
+    {
+        $resolver = new OrmResolver();
+
+        return new AuthorizationService($resolver);
+    }
+
+
     /**
      * Load all the application configuration and bootstrap logic.
      *
@@ -100,6 +115,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         parent::bootstrap();
 
         $this->addPlugin('Authentication');
+        $this->addPlugin('Authorization');
 
         if (PHP_SAPI !== 'cli') {
             FactoryLocator::add(
@@ -118,6 +134,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
     public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue
     {
         $authentication = new AuthenticationMiddleware($this);
+        $authorization = (new AuthorizationMiddleware($this));
 
         $middlewareQueue
             // Catch any exceptions in the lower layers,
@@ -147,6 +164,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ]))
 
             ->add($authentication)
+            ->add($authorization)
             ;
 
         return $middlewareQueue;
