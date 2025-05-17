@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Nordique Pro Bold";
+    src: url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.eot");
+    src: url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.svg#Nordique Pro Bold")format("svg");
+}
+
 /* Milligram overrides */
 :root {
     /* The following are official CakePHP colors */
@@ -38,7 +48,8 @@
 }
 
 body {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; */
+    font-family: 'Nordique Pro Bold', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: 400;
     background: var(--color-main-bg);
 }
@@ -46,7 +57,7 @@ body {
 .top-nav-links,
 .side-nav,
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Raleway", sans-serif;
+    /* font-family: "Raleway", sans-serif; */
 }
 
 h1, h2, h3, h4, h5, h6 {

@@ -1,28 +1,3 @@
-/* @font-face {
-    font-family: 'Nordique Pro Cyrillic';
-    src: url('../fonts/NordiqueProCyrillic-Bold.woff2') format('woff2'),
-         url('../fonts/NordiqueProCyrillic-Bold.woff') format('woff');
-    font-weight: bold;
-    font-style: normal;
-    font-display: swap;
-} */
-@font-face {
-    font-family: "Nordique Pro Bold";
-    src: url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.eot");
-    src: url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.svg#Nordique Pro Bold")format("svg");
-}
-
-html, body {
-    height: 100%;
-    margin: 0;
-    font-family: 'Nordique Pro Bold', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-
-}
-
 #loginnuevo {
     margin: auto;
     width: 300px;
