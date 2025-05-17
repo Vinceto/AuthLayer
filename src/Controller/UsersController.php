@@ -21,7 +21,15 @@ class UsersController extends AppController
         $this->Authentication->allowUnauthenticated(['login', 'add', 'verify2fa']);
 
         $user = $this->Authentication->getIdentity();
-        if ($user && !empty($user->google2fa_secret) && $this->request->getParam('action') !== 'verify2fa') {
+        $currentAction = $this->request->getParam('action');
+
+        $excludedActions = ['login', 'logout', 'verify2fa'];
+
+        if (
+            $user &&
+            !empty($user->google2fa_secret) &&
+            !in_array($currentAction, $excludedActions)
+        ) {
             if (!$this->request->getSession()->read('Auth.2fa_verified')) {
                 return $this->redirect(['action' => 'verify2fa']);
             }
