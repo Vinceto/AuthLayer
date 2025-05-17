@@ -2,11 +2,18 @@
 namespace App\Controller\Component;
 
 use Cake\Controller\Component;
+use Cake\Controller\ComponentRegistry;
+use Cake\Utility\Security;
+use Cake\Http\Response;
+use Cake\ORM\TableRegistry;
 use PragmaRX\Google2FA\Google2FA;
 use Endroid\QrCode\Builder\Builder;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\ErrorCorrectionLevel;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelHigh;
+use Endroid\QrCode\Label\Label;
+
 
 class Google2faComponent extends Component
 {
@@ -47,5 +54,18 @@ class Google2faComponent extends Component
             ->build();
 
         return $result->getDataUri();
+    }
+
+    public function enable2fa()
+    {
+        $this->Google2fa->enable2fa($this);
+    }
+
+    public function verify2fa()
+    {
+        $result = $this->Google2fa->verify2fa($this);
+        if ($result instanceof \Cake\Http\Response) {
+            return $result; // redirige si es necesario
+        }
     }
 }
