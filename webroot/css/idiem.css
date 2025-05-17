@@ -16,6 +16,13 @@
     url("https://db.onlinewebfonts.com/t/80241b4ef777109d2625c9195e7ca852.svg#Nordique Pro Bold")format("svg");
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Nordique Pro Bold', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
 #loginnuevo {
     margin: auto;
     width: 300px;
@@ -38,14 +45,16 @@ table td {
     padding: 5px;
 }
 
+.idiem-banner-content {
+    display: flex;
+    flex-direction: column;
+}
+
 .idiem-header {
     background: linear-gradient(to right, #1a3b6e, #1f4b85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    font-family: 'Nordique Pro Bold', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    justify-content: center; /* Centra verticalmente */
+    align-items: center;     /* Centra horizontalmente (opcional) */
+    height: 15vh;           /* O la altura deseada */
 }
 
 .idiem-subtitle {
@@ -55,34 +64,27 @@ table td {
     color: #ddd;
 }
 
-.idiem-banner-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: white;
-}
-
 .idiem-logo {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
     text-decoration: none;
     color: white;
 }
 
 .idiem-logo .idiem-i {
     color: red;
-    font-size: 60px;
-    letter-spacing: 10px;
+    font-size: 65px;
+    letter-spacing: 2px;
 }
 
 .idiem-logo .idiem-rest {
     color: white;
-    font-size: 60px;
-    letter-spacing: 10px;
+    font-size: 65px;
+    letter-spacing: 2px;
 }
 
 .idiem-logo .idiem-subtitle {
-    font-size: 10px;
+    font-size: 8px;
     color: #fff;
 }

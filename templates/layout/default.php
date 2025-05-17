@@ -35,15 +35,21 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 </head>
 <body>
-    <div class="idiem-header">
-        <a href="<?= $this->Url->build('/') ?>" class="idiem-logo">
-            <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span>
-            <div class="idiem-subtitle">UN SIGLO DE CONFIANZA Y RESPALDO</div>
-        </a>
+    <div class="idiem-banner-content">
+
+        <div class="idiem-header">
+            <div class="container">
+                <a href="<?= $this->Url->build('/') ?>" class="idiem-logo">
+                    <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span>
+                    <span class="idiem-subtitle">UN SIGLO DE CONFIANZA Y RESPALDO</span>
+                </a>
+            </div>
+        </div>
     </div>
+    
     <nav class="top-nav">
         <div class="top-nav-title">
-            <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
+            <a href="<?= $this->Url->build('/') ?>"><span>Intranet </span>Azul</a>
         </div>
         <div class="top-nav-links">
             <a target="_blank" rel="noopener" href="https://book.cakephp.org/5/">Documentation</a>
