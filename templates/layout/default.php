@@ -35,12 +35,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 </head>
 <body>
-    <div class="idiem-banner-content">
-
-        <div class="idiem-header">
-            <div class="container">
-                <a href="<?= $this->Url->build('/') ?>" class="idiem-logo">
-                    <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span>
+    <div class="custom-banner">
+        <div class="curve-bg">
+            <div class="idiem-logo-container">
+                <a href="/AuthLayer/" class="container idiem-logo">
+                    <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span><br>
                     <span class="idiem-subtitle">UN SIGLO DE CONFIANZA Y RESPALDO</span>
                 </a>
             </div>
