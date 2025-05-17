@@ -156,40 +156,54 @@ class UsersController extends AppController
     public function enable2fa()
     {
         $identity = $this->Authentication->getIdentity();
-        $user = $this->Users->get($identity->getIdentifier()); // Obtener la entidad de usuario
+        $user = $this->Users->get($identity->getIdentifier());
 
-        $secretKey = $this->Google2fa->generateSecretKey();
-        $qrCodeUrl = $this->Google2fa->getQRCodeUrl('YourCompany', $user->email, $secretKey);
-
-        // Guarda el secretKey en la base de datos asociado al usuario
-        $user->google2fa_secret = $secretKey;
-        if ($this->Users->save($user)) {
-            $this->Flash->success(__('2FA habilitado correctamente.'));
+        // Si no tiene aún clave secreta, la generamos y guardamos
+        if (empty($user->google2fa_secret)) {
+            $secretKey = $this->Google2fa->generateSecretKey();
+            $user->google2fa_secret = $secretKey;
+            $this->Users->save($user);
         } else {
-            $this->Flash->error(__('No se pudo habilitar el 2FA. Por favor, inténtelo de nuevo.'));
+            $secretKey = $user->google2fa_secret;
         }
 
-        $this->set(compact('qrCodeUrl'));
+        $qrImage = $this->Google2fa->getQRCodeImage('AuthLayerApp', $user->email, $secretKey);
+
+        // Si recibimos POST, es para verificar el código OTP ingresado por el usuario
+        if ($this->request->is('post')) {
+            $otp = $this->request->getData('otp');
+            if ($this->Google2fa->verifyKey($secretKey, $otp)) {
+                $this->Flash->success('2FA ha sido activado correctamente.');
+                // Marcar 2FA como verificado en sesión (o en BD si prefieres)
+                $this->request->getSession()->write('Auth.2fa_verified', true);
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error('Código 2FA incorrecto. Por favor, intenta de nuevo.');
+            }
+        }
+
+        $this->set(compact('qrImage', 'secretKey'));
     }
+
 
     public function verify2fa()
     {
+        $user = $this->Authentication->getIdentity();
+        $this->set(compact('user'));
+
         if ($this->request->is('post')) {
-            $user = $this->Authentication->getIdentity();
             $oneTimePassword = $this->request->getData('otp');
             $secretKey = $user->google2fa_secret;
 
             if ($this->Google2fa->verifyKey($secretKey, $oneTimePassword)) {
-                // 2FA verificado correctamente
                 $this->request->getSession()->write('Auth.2fa_verified', true);
                 $this->Flash->success('2FA verificado correctamente.');
+
                 $target = $this->Authentication->getLoginRedirect() ?? '/';
                 return $this->redirect($target);
             } else {
-                // 2FA fallido
                 $this->Flash->error('Código 2FA incorrecto.');
             }
         }
-        $this->set(compact('user'));
-    }
+    }    
 }
