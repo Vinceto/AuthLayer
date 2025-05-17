@@ -27,13 +27,20 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     </title>
     <?= $this->Html->meta('icon') ?>
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake']) ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'fonts', 'cake', 'idiem']) ?>
 
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
+
 </head>
 <body>
+    <div class="idiem-header">
+        <a href="<?= $this->Url->build('/') ?>" class="idiem-logo">
+            <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span>
+            <div class="idiem-subtitle">UN SIGLO DE CONFIANZA Y RESPALDO</div>
+        </a>
+    </div>
     <nav class="top-nav">
         <div class="top-nav-title">
             <a href="<?= $this->Url->build('/') ?>"><span>Cake</span>PHP</a>
