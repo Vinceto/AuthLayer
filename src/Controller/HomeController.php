@@ -9,6 +9,11 @@ namespace App\Controller;
  */
 class HomeController extends AppController
 {
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('DynamicConnectionManager');
+    }
     /**
      * Index method
      *
@@ -16,7 +21,12 @@ class HomeController extends AppController
      */
     public function index()
     {
+        //$connection = $this->DynamicConnectionManager->getConnection('default', 'otra_base_de_datos');
         
+        $connection = $this->DynamicConnectionManager->getConnection('intranet_azul_qa', 'IDIEM_KERNEL');
+        $databases = $this->DynamicConnectionManager->listDatabasesFromConnection($connection);
+        $tables = $this->DynamicConnectionManager->listTablesFromConnection($connection);
+        $this->set(compact('tables', 'databases'));
     }
 
 }
