@@ -21,12 +21,19 @@ class HomeController extends AppController
      */
     public function index()
     {
-        //$connection = $this->DynamicConnectionManager->getConnection('default', 'otra_base_de_datos');
-        
-        $connection = $this->DynamicConnectionManager->getConnection('intranet_azul_qa', 'IDIEM_KERNEL');
-        $databases = $this->DynamicConnectionManager->listDatabasesFromConnection($connection);
-        $tables = $this->DynamicConnectionManager->listTablesFromConnection($connection);
-        $this->set(compact('tables', 'databases'));
+        $databases = [];
+        $tables = [];
+
+        $connection = $this->DynamicConnectionManager->getSafeConnection('intranet_azul_qa', 'IDIEM_KERNEL');
+
+        if ($connection !== null) {
+            $databases = $this->DynamicConnectionManager->listDatabasesFromConnection($connection);
+            $tables = $this->DynamicConnectionManager->listTablesFromConnection($connection);
+        } else {
+            $this->Flash->error('La base de datos "IDIEM_KERNEL" no está disponible. Asegúrate de tener activa la VPN.');
+        }
+
+        $this->set(compact('databases', 'tables'));
     }
 
 }

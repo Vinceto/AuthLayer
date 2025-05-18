@@ -4,6 +4,8 @@ namespace App\Controller\Component;
 use Cake\Controller\Component;
 use Cake\Datasource\ConnectionManager;
 use Cake\Database\Connection;
+use Cake\Database\Exception\MissingConnectionException;
+use PDOException;
 
 class DynamicConnectionManagerComponent extends Component
 {
@@ -25,6 +27,28 @@ class DynamicConnectionManagerComponent extends Component
         }
 
         return ConnectionManager::get($dynamicName);
+    }
+
+    /**
+     * Intenta obtener una conexión válida. Si no es posible, retorna null.
+     *
+     * @param string $baseDatasource
+     * @param string $databaseName
+     * @return \Cake\Database\Connection|null
+     */
+    public function getSafeConnection(string $baseDatasource, string $databaseName): ?Connection
+    {
+        try {
+            $connection = $this->getConnection($baseDatasource, $databaseName);
+            $connection->execute('SELECT 1');
+            return $connection;
+        } catch (MissingConnectionException | PDOException $e) {
+            $this->log("Error de conexión a la base de datos '{$databaseName}': " . $e->getMessage(), 'error');
+            return null;
+        } catch (\Exception $e) {
+            $this->log("Error inesperado al intentar conectar con '{$databaseName}': " . $e->getMessage(), 'error');
+            return null;
+        }
     }
 
     /**
@@ -52,7 +76,7 @@ class DynamicConnectionManagerComponent extends Component
         }
         return $databases;
     }
-    
+
     /**
      * Lista las tablas existentes en una conexión dada.
      *
@@ -63,5 +87,4 @@ class DynamicConnectionManagerComponent extends Component
     {
         return $connection->getSchemaCollection()->listTables();
     }
-    
 }
