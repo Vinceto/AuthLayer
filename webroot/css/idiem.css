@@ -108,3 +108,9 @@ table td {
     color: #333;
     margin-top: -22px;
 }
+
+.welcome-msg {
+    font-size: 14px;
+    color: white;
+    margin-top: 10px;
+}

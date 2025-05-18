@@ -37,13 +37,23 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
     <div class="custom-banner">
         <div class="curve-bg">
-            <div class="idiem-logo-container">
-                <a href="/AuthLayer/" class="container idiem-logo">
-                    <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span><br>
-                    <span class="idiem-subtitle">UN SIGLO DE CONFIANZA Y RESPALDO</span>
-                </a>
+            <div class="container idiem-logo-container">
+                <div style="display: flex; align-items: center; justify-content: space-between; position: relative;">
+                    <a href="/AuthLayer/" class="idiem-logo" style="flex: 1;">
+                        <span class="idiem-rest">Id<span class="idiem-i">i</span>em</span><br>
+                        <span class="idiem-subtitle">UN SIGLO DE CONFIANZA Y RESPALDO</span>
+                    </a>
+                    <?php if ($this->Identity->isLoggedIn()): ?>
+                        <?php $user = $this->Identity->get(); ?>
+                        <div class="banner-user-info" style="flex: 1; text-align: right; position: absolute; bottom: 0; right: 0;">
+                            <span class="welcome-msg">Bienvenido, <?= h($user->name ?? $user->username ?? 'Usuario') ?></span>
+                            <a href="<?= $this->Url->build(['controller' => 'Users', 'action' => 'logout']) ?>" class="logout-link">Cerrar sesión</a>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
+       
     </div>
     
     <nav class="top-nav">
